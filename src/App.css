@@ -1,0 +1,57 @@
+.quizify {
+    font-family: 'Kumbh Sans', sans-serif;
+    text-align: justify;
+    margin: 10px 20px 10px 20px;
+    border: 1px solid transparent;
+    background-color: lavender;
+    padding-left: 5px;
+    text-align: justify;
+
+
+}
+
+.questions {
+    font-size: 1.4rem;
+}
+
+.button {
+    background-color: blue;
+    width: 6rem;
+    margin-top: 5px;
+    text-align: center;
+    font-size: 1.2rem;
+    border-color: transparent;
+    color: white;
+}
+
+.btnFooter {
+    display: flex;
+    justify-content: center;
+}
+
+.options {
+    color: black;
+    font-size: 1.2rem;
+
+}
+
+.option {
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+
+.correctAnswer {
+
+    color: green;
+
+}
+
+.wrongAnwer {
+    color: red;
+}
+
+.showAnswer {
+    color: green;
+    font-size: 1.2rem;
+}
