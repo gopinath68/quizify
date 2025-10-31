@@ -1,18 +1,53 @@
-import { use, useRef, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import "./App.css";
 import questions from "./mocks/questions.json";
 
 function App() {
   const [visibleAnswers, setVisibleAnswers] = useState(false);
   const [showResult, setShowResult] = useState(false);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [randomQuestions, setRandomQuestions] = useState([]);
+  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const _questions = randomQuestions;
+  let slicedQuestions = _questions.slice(
+    currentQuestionIndex,
+    currentQuestionIndex + 1
+  );
 
   const [selectedAnswers, setSelectedAnswers] = useState(
-    new Array(2).fill(undefined)
+    new Array(10).fill(undefined)
   );
-  const [correctAnswers, setCorrectAnswers] = useState();
 
-  const slicedQuestionsRef = useRef(questions.slice(0, 2));
+  slicedQuestions = _questions.slice(
+    currentQuestionIndex,
+    currentQuestionIndex + 1
+  );
 
+  console.log(
+    "slicedQuestionsRef",
+    _questions.slice(currentQuestionIndex, currentQuestionIndex + 1)
+  );
+  useEffect(() => {
+    const randomQuestionsIdx = () => {
+      const randomIdx = [];
+      const randomQuestions = [];
+      const totalQuestionsCount = questions.length - 1;
+
+      while (randomQuestions.length !== selectedAnswers.length) {
+        // check idx is unique
+        // yes, push that quest to randomQuestions nd idx to rQIdx
+        let idx = Math.ceil(Math.random() * totalQuestionsCount);
+        if (!randomIdx.includes(idx)) {
+          randomIdx.push(idx);
+          randomQuestions.push(questions[idx]);
+        }
+      }
+      console.log("randomQuestions", randomQuestions);
+      setRandomQuestions(randomQuestions);
+    };
+    randomQuestionsIdx();
+  }, []);
+  console.log("randomQuestions", randomQuestions);
   const handleCheckAnswers = () => {
     console.log(selectedAnswers);
     const hasUnansweredQuestion = selectedAnswers.every(
@@ -21,21 +56,23 @@ function App() {
 
     console.log("hasUnansweredQuestion::", hasUnansweredQuestion);
     if (hasUnansweredQuestion) {
-      const wrongAnswers = slicedQuestionsRef.current.filter(
+      const wrongAnswers = _questions.filter(
         (ques, idx) => ques.answer !== selectedAnswers[idx]
       );
-      const correctAnswers = selectedAnswers.length - wrongAnswers.length;
+      console.log("correctAnswers", wrongAnswers);
+      const correctAnswers = _questions.length - wrongAnswers.length;
       setVisibleAnswers(true);
+      setShowResult(true);
       setCorrectAnswers(correctAnswers);
       console.log("wrongAnswers", wrongAnswers);
-      window.scroll({ top: 0, left: 0, behavior: "smooth" });
     } else {
       let unansweredWarningMsg = "one or more questions you doesn't selected";
       if (confirm(unansweredWarningMsg) === true) {
-        const wrongAnswers = slicedQuestionsRef.current.filter(
+        const wrongAnswers = _questions.filter(
           (ques, idx) => ques.answer !== selectedAnswers[idx]
         );
-        const correctAnswers = selectedAnswers.length - wrongAnswers.length;
+        const correctAnswers = _questions.length - wrongAnswers.length;
+        console.log("correctAnswers", wrongAnswers.length);
         setShowResult(true);
         setCorrectAnswers(correctAnswers);
         setVisibleAnswers(true);
@@ -46,66 +83,128 @@ function App() {
     }
   };
 
-  const handleAnswerSelection = (e, idx) => {
+  const handleAnswerSelection = (e, id) => {
     const selectedAnswersCopy = structuredClone(selectedAnswers);
-    selectedAnswersCopy[idx] = e.target.value;
+    selectedAnswersCopy[id] = e.target.value;
     setSelectedAnswers(selectedAnswersCopy);
     console.log(selectedAnswers);
   };
 
+  const handlePrevQuestions = () => {
+    const prevQuestionIndex = currentQuestionIndex - 1;
+    if (prevQuestionIndex >= 0) {
+      setCurrentQuestionIndex(prevQuestionIndex);
+      slicedQuestions = _questions.slice(
+        prevQuestionIndex,
+        prevQuestionIndex + 1
+      );
+    } else {
+      alert("This is the first question.");
+    }
+  };
+
+  const handleReset = () => {
+    setVisibleAnswers(false);
+    setShowResult(false);
+    setCurrentQuestionIndex(0);
+    slicedQuestions = _questions.slice(0, 1);
+    setSelectedAnswers(new Array(10).fill(undefined));
+    setCorrectAnswers(0);
+  };
+
+  const handleNextQuestionChange = () => {
+    const nextQuestionIndex = currentQuestionIndex + 1;
+    if (nextQuestionIndex < _questions.length) {
+      setCurrentQuestionIndex(nextQuestionIndex);
+      slicedQuestions = _questions.slice(
+        nextQuestionIndex,
+        nextQuestionIndex + 1
+      );
+    } else {
+      alert("No more questions available.");
+    }
+  };
+
   return (
     <>
+      {" "}
+      <h3 className="heading">Quizify</h3>
       <div className="quizify">
-        {showResult && (
+        {showResult && selectedAnswers.length > 0 && (
           <>
             <h3 style={{ textAlign: "center", color: "green" }}>
-              You answered {correctAnswers} out of{" "}
-              {slicedQuestionsRef.current.length} questions correctly.{" "}
+              You answered {correctAnswers} out of {_questions.length} questions
+              correctly.{" "}
             </h3>
           </>
         )}
-        {slicedQuestionsRef.current.map((ques, idx) => (
-          <div key={idx}>
+        {slicedQuestions.map((ques, idx) => (
+          <div key={ques.id} className="questionBlock">
             <p className="questions">
-              {idx + 1}.{ques.question}
+              {currentQuestionIndex + 1}.{ques.question}
             </p>
-            {ques.options.map((option, i) => (
-              <div
-                key={i}
-                className={`options ${
-                  visibleAnswers &&
-                  option === selectedAnswers[idx] &&
-                  selectedAnswers[idx] === ques.answer
-                    ? "correctAnswer"
-                    : "" ||
-                      (visibleAnswers &&
-                        option === selectedAnswers[idx] &&
-                        selectedAnswers[idx] !== ques.answer)
-                    ? "wrongAnwer"
-                    : "" ||
-                      (visibleAnswers &&
-                        selectedAnswers[idx] !== ques.answer &&
-                        option === ques.answer)
-                    ? "correctAnswer"
-                    : ""
-                }`}
-              >
-                <input
-                  className="option"
-                  type="radio"
-                  value={option}
-                  checked={selectedAnswers[idx] === option}
-                  onChange={(e) => handleAnswerSelection(e, idx)}
-                />
-                {option}
-              </div>
-            ))}
+            <div className="optionsContainer">
+              {ques.options.map((option, i) => (
+                <div
+                  key={i}
+                  className={`options ${
+                    visibleAnswers &&
+                    showResult &&
+                    option === selectedAnswers[currentQuestionIndex] &&
+                    selectedAnswers[currentQuestionIndex] === ques.answer &&
+                    option === ques.answer
+                      ? "correctAnswer"
+                      : "" ||
+                        (visibleAnswers && showResult && option === ques.answer)
+                      ? "correctAnswer"
+                      : "" ||
+                        (visibleAnswers &&
+                          showResult &&
+                          option === selectedAnswers[currentQuestionIndex] &&
+                          selectedAnswers[currentQuestionIndex] !== ques.answer)
+                      ? "wrongAnswer"
+                      : ""
+                  }`}
+                >
+                  <label className="optionField">
+                    <input
+                      className="inputOption"
+                      disabled={showResult === true}
+                      type="radio"
+                      value={option}
+                      checked={selectedAnswers[currentQuestionIndex] === option}
+                      onChange={(e) =>
+                        handleAnswerSelection(e, currentQuestionIndex)
+                      }
+                    />
+                    <span className="option">{option}</span>
+                  </label>
+                </div>
+              ))}
+            </div>
           </div>
         ))}
         <div className="btnFooter">
-          <button className="button" onClick={() => handleCheckAnswers()}>
-            submit
-          </button>
+          {currentQuestionIndex > 0 && (
+            <button className="button" onClick={handlePrevQuestions}>
+              Previous
+            </button>
+          )}
+          {currentQuestionIndex === _questions.length - 1 && (
+            <button className="button" onClick={() => handleCheckAnswers()}>
+              Submit
+            </button>
+          )}
+          {currentQuestionIndex < _questions.length - 1 && (
+            <button className="button" onClick={handleNextQuestionChange}>
+              Next
+            </button>
+          )}
+          {currentQuestionIndex === _questions.length - 1 && (
+            <button className="button" onClick={handleReset}>
+              Reset
+            </button>
+          )}
         </div>
       </div>
     </>

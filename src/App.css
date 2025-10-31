@@ -3,15 +3,23 @@
     text-align: justify;
     margin: 10px 20px 10px 20px;
     border: 1px solid transparent;
-    background-color: lavender;
-    padding-left: 5px;
+    background-color: whitesmoke;
+    padding-left: 10px;
     text-align: justify;
 
 
 }
 
+.heading {
+    font-family: 'Kumbh Sans', sans-serif;
+    text-align: center;
+    color: blueviolet;
+}
+
 .questions {
     font-size: 1.4rem;
+    padding-left: 10px;
+    text-align: center;
 }
 
 .button {
@@ -19,39 +27,75 @@
     width: 6rem;
     margin-top: 5px;
     text-align: center;
+    border-radius: 1rem;
     font-size: 1.2rem;
     border-color: transparent;
     color: white;
+    cursor: pointer;
 }
 
 .btnFooter {
     display: flex;
     justify-content: center;
+    gap: 12px;
+    margin-top: 4vh;
+    margin-bottom: 4vh;
+
 }
+
+.optionField {
+    display: block;
+    cursor: pointer;
+
+}
+
+.optionField:hover {
+    color: blue;
+}
+
+.optionsContainer {
+    display: block;
+    text-align: center;
+}
+
 
 .options {
+
     color: black;
     font-size: 1.2rem;
-
+    cursor: pointer;
+    /* border: 8px solid white;
+    background-color: white; */
+    padding: 1vh;
 }
 
-.option {
+input[type="radio"]:checked+span {
+    display: block;
+    border: 0px solid green;
+    background-color: green;
+    color: white;
+}
+
+
+.inputOption {
+
     border: 1px solid transparent;
     cursor: pointer;
+
 }
 
 
 .correctAnswer {
+    border: 0px solid green;
+    background-color: green;
+    color: white;
 
-    color: green;
 
 }
 
-.wrongAnwer {
-    color: red;
-}
+.wrongAnswer {
+    border: 0px solid red;
+    background-color: red;
+    color: white;
 
-.showAnswer {
-    color: green;
-    font-size: 1.2rem;
 }
