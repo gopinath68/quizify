@@ -67,18 +67,13 @@
     /* border: 8px solid white;
     background-color: white; */
     padding: 1vh;
+    margin: 0.5rem inherit;
 }
 
-input[type="radio"]:checked+span {
-    display: block;
-    border: 0px solid green;
-    background-color: green;
-    color: white;
-}
 
 
 .inputOption {
-
+    display: none;
     border: 1px solid transparent;
     cursor: pointer;
 
@@ -86,16 +81,19 @@ input[type="radio"]:checked+span {
 
 
 .correctAnswer {
-    border: 0px solid green;
+    border: 0 solid green;
     background-color: green;
     color: white;
-
-
 }
 
 .wrongAnswer {
-    border: 0px solid red;
+    border: 0 solid red;
     background-color: red;
     color: white;
+}
 
+.selectedOption {
+    background-color: orange;
+    color: white;
+    font-weight: 600px;
 }

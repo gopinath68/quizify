@@ -3,13 +3,15 @@
     "id": 1,
     "question": "What is the capital of France?",
     "options": ["Paris", "London", "Rome", "Berlin"],
-    "answer": "Paris"
+    "answer": "Paris",
+    "shown": false
   },
   {
     "id": 2,
     "question": "Which planet is known as the Red Planet?",
     "options": ["Venus", "Mars", "Jupiter", "Saturn"],
-    "answer": "Mars"
+    "answer": "Mars",
+    "shown": false
   },
   {
     "id": 3,
@@ -20,7 +22,8 @@
       "Leo Tolstoy",
       "Jane Austen"
     ],
-    "answer": "William Shakespeare"
+    "answer": "William Shakespeare",
+    "shown": false
   },
   {
     "id": 4,
@@ -31,19 +34,22 @@
       "Arctic Ocean",
       "Pacific Ocean"
     ],
-    "answer": "Pacific Ocean"
+    "answer": "Pacific Ocean",
+    "shown": false
   },
   {
     "id": 5,
     "question": "What is the chemical symbol for Gold?",
     "options": ["Ag", "Au", "Gd", "Go"],
-    "answer": "Au"
+    "answer": "Au",
+    "shown": false
   },
   {
     "id": 6,
     "question": "Which gas do plants absorb during photosynthesis?",
     "options": ["Oxygen", "Nitrogen", "Carbon Dioxide", "Helium"],
-    "answer": "Carbon Dioxide"
+    "answer": "Carbon Dioxide",
+    "shown": false
   },
   {
     "id": 7,
@@ -54,27 +60,30 @@
       "Vincent van Gogh",
       "Michelangelo"
     ],
-    "answer": "Leonardo da Vinci"
+    "answer": "Leonardo da Vinci",
+    "shown": false
   },
   {
     "id": 8,
     "question": "Which planet has the most moons?",
     "options": ["Earth", "Jupiter", "Mars", "Neptune"],
-    "answer": "Jupiter"
+    "answer": "Jupiter",
+    "shown": false
   },
   {
     "id": 9,
     "question": "What is the hardest natural substance on Earth?",
     "options": ["Iron", "Diamond", "Gold", "Platinum"],
-    "answer": "Diamond"
+    "answer": "Diamond",
+    "shown": false
   },
   {
     "id": 10,
     "question": "Which continent is known as the 'Dark Continent'?",
     "options": ["Asia", "Africa", "Europe", "South America"],
-    "answer": "Africa"
+    "answer": "Africa",
+    "shown": false
   },
-
   {
     "id": 11,
     "question": "Who was the first President of the United States?",
@@ -84,55 +93,64 @@
       "George Washington",
       "Thomas Jefferson"
     ],
-    "answer": "George Washington"
+    "answer": "George Washington",
+    "shown": false
   },
   {
     "id": 12,
     "question": "What is the largest mammal in the world?",
     "options": ["African Elephant", "Blue Whale", "Giraffe", "Orca"],
-    "answer": "Blue Whale"
+    "answer": "Blue Whale",
+    "shown": false
   },
   {
     "id": 13,
     "question": "Which language has the most native speakers?",
     "options": ["English", "Mandarin Chinese", "Spanish", "Hindi"],
-    "answer": "Mandarin Chinese"
+    "answer": "Mandarin Chinese",
+    "shown": false
   },
   {
     "id": 14,
     "question": "What is the boiling point of water at sea level?",
     "options": ["50°C", "90°C", "100°C", "120°C"],
-    "answer": "100°C"
+    "answer": "100°C",
+    "shown": false
   },
   {
     "id": 15,
     "question": "Which metal is liquid at room temperature?",
     "options": ["Mercury", "Iron", "Aluminum", "Copper"],
-    "answer": "Mercury"
+    "answer": "Mercury",
+    "shown": false
   },
   {
     "id": 16,
     "question": "Which is the smallest prime number?",
     "options": ["0", "1", "2", "3"],
-    "answer": "2"
+    "answer": "2",
+    "shown": false
   },
   {
     "id": 17,
     "question": "Which country invented paper?",
     "options": ["Egypt", "China", "Greece", "India"],
-    "answer": "China"
+    "answer": "China",
+    "shown": false
   },
   {
     "id": 18,
     "question": "Which part of the plant conducts photosynthesis?",
     "options": ["Root", "Stem", "Leaf", "Flower"],
-    "answer": "Leaf"
+    "answer": "Leaf",
+    "shown": false
   },
   {
     "id": 19,
     "question": "What is the largest desert in the world?",
     "options": ["Gobi", "Sahara", "Antarctic", "Arabian"],
-    "answer": "Antarctic"
+    "answer": "Antarctic",
+    "shown": false
   },
   {
     "id": 20,
@@ -143,37 +161,43 @@
       "Marie Curie",
       "Isaac Newton"
     ],
-    "answer": "Alexander Fleming"
+    "answer": "Alexander Fleming",
+    "shown": false
   },
   {
     "id": 21,
     "question": "What is the currency of Japan?",
     "options": ["Yuan", "Won", "Yen", "Ringgit"],
-    "answer": "Yen"
+    "answer": "Yen",
+    "shown": false
   },
   {
     "id": 22,
     "question": "What is the square root of 64?",
     "options": ["6", "8", "10", "12"],
-    "answer": "8"
+    "answer": "8",
+    "shown": false
   },
   {
     "id": 23,
     "question": "Which animal is known as the King of the Jungle?",
     "options": ["Elephant", "Tiger", "Lion", "Leopard"],
-    "answer": "Lion"
+    "answer": "Lion",
+    "shown": false
   },
   {
     "id": 24,
     "question": "What is the main ingredient in guacamole?",
     "options": ["Tomato", "Avocado", "Cucumber", "Lettuce"],
-    "answer": "Avocado"
+    "answer": "Avocado",
+    "shown": false
   },
   {
     "id": 25,
     "question": "Which planet is closest to the Sun?",
     "options": ["Mercury", "Venus", "Earth", "Mars"],
-    "answer": "Mercury"
+    "answer": "Mercury",
+    "shown": false
   },
   {
     "id": 26,
@@ -184,25 +208,29 @@
       "Alexander Bell",
       "James Watt"
     ],
-    "answer": "Thomas Edison"
+    "answer": "Thomas Edison",
+    "shown": false
   },
   {
     "id": 27,
     "question": "What is H2O commonly known as?",
     "options": ["Hydrogen", "Oxygen", "Water", "Salt"],
-    "answer": "Water"
+    "answer": "Water",
+    "shown": false
   },
   {
     "id": 28,
     "question": "Which is the tallest mountain in the world?",
     "options": ["Mount Kilimanjaro", "Mount Everest", "K2", "Denali"],
-    "answer": "Mount Everest"
+    "answer": "Mount Everest",
+    "shown": false
   },
   {
     "id": 29,
     "question": "Which organ purifies blood in the human body?",
     "options": ["Lungs", "Liver", "Kidney", "Heart"],
-    "answer": "Kidney"
+    "answer": "Kidney",
+    "shown": false
   },
   {
     "id": 30,
@@ -213,37 +241,43 @@
       "Yangtze River",
       "Mississippi River"
     ],
-    "answer": "Nile River"
+    "answer": "Nile River",
+    "shown": false
   },
   {
     "id": 31,
     "question": "Which instrument measures atmospheric pressure?",
     "options": ["Thermometer", "Barometer", "Anemometer", "Hygrometer"],
-    "answer": "Barometer"
+    "answer": "Barometer",
+    "shown": false
   },
   {
     "id": 32,
     "question": "Which country gifted the Statue of Liberty to the USA?",
     "options": ["France", "England", "Germany", "Spain"],
-    "answer": "France"
+    "answer": "France",
+    "shown": false
   },
   {
     "id": 33,
     "question": "Which blood type is known as the universal donor?",
     "options": ["A", "B", "O negative", "AB positive"],
-    "answer": "O negative"
+    "answer": "O negative",
+    "shown": false
   },
   {
     "id": 34,
     "question": "What is the most abundant gas in Earth's atmosphere?",
     "options": ["Oxygen", "Hydrogen", "Nitrogen", "Carbon Dioxide"],
-    "answer": "Nitrogen"
+    "answer": "Nitrogen",
+    "shown": false
   },
   {
     "id": 35,
     "question": "What is the largest planet in our solar system?",
     "options": ["Saturn", "Jupiter", "Uranus", "Neptune"],
-    "answer": "Jupiter"
+    "answer": "Jupiter",
+    "shown": false
   },
   {
     "id": 36,
@@ -254,55 +288,64 @@
       "Galileo Galilei",
       "Stephen Hawking"
     ],
-    "answer": "Albert Einstein"
+    "answer": "Albert Einstein",
+    "shown": false
   },
   {
     "id": 37,
     "question": "Which organ pumps blood throughout the human body?",
     "options": ["Liver", "Brain", "Heart", "Kidney"],
-    "answer": "Heart"
+    "answer": "Heart",
+    "shown": false
   },
   {
     "id": 38,
     "question": "Which planet is known for its rings?",
     "options": ["Neptune", "Uranus", "Saturn", "Jupiter"],
-    "answer": "Saturn"
+    "answer": "Saturn",
+    "shown": false
   },
   {
     "id": 39,
     "question": "Which country is known as the Land of the Rising Sun?",
     "options": ["China", "Japan", "Thailand", "South Korea"],
-    "answer": "Japan"
+    "answer": "Japan",
+    "shown": false
   },
   {
     "id": 40,
     "question": "Which element has the chemical symbol 'O'?",
     "options": ["Gold", "Oxygen", "Osmium", "Oganesson"],
-    "answer": "Oxygen"
+    "answer": "Oxygen",
+    "shown": false
   },
   {
     "id": 41,
     "question": "What is the main language spoken in Brazil?",
     "options": ["Spanish", "English", "Portuguese", "French"],
-    "answer": "Portuguese"
+    "answer": "Portuguese",
+    "shown": false
   },
   {
     "id": 42,
     "question": "How many continents are there on Earth?",
     "options": ["5", "6", "7", "8"],
-    "answer": "7"
+    "answer": "7",
+    "shown": false
   },
   {
     "id": 43,
     "question": "Which organ is responsible for breathing?",
     "options": ["Heart", "Lungs", "Liver", "Kidneys"],
-    "answer": "Lungs"
+    "answer": "Lungs",
+    "shown": false
   },
   {
     "id": 44,
     "question": "Which is the fastest land animal?",
     "options": ["Lion", "Cheetah", "Horse", "Tiger"],
-    "answer": "Cheetah"
+    "answer": "Cheetah",
+    "shown": false
   },
   {
     "id": 45,
@@ -313,25 +356,29 @@
       "Yuri Gagarin",
       "Michael Collins"
     ],
-    "answer": "Neil Armstrong"
+    "answer": "Neil Armstrong",
+    "shown": false
   },
   {
     "id": 46,
     "question": "What is the smallest country in the world?",
     "options": ["Monaco", "Vatican City", "San Marino", "Liechtenstein"],
-    "answer": "Vatican City"
+    "answer": "Vatican City",
+    "shown": false
   },
   {
     "id": 47,
     "question": "Which natural satellite orbits the Earth?",
     "options": ["Mars", "The Moon", "Venus", "Europa"],
-    "answer": "The Moon"
+    "answer": "The Moon",
+    "shown": false
   },
   {
     "id": 48,
     "question": "Which continent is the Sahara Desert located in?",
     "options": ["Asia", "Africa", "Australia", "South America"],
-    "answer": "Africa"
+    "answer": "Africa",
+    "shown": false
   },
   {
     "id": 49,
@@ -342,12 +389,14 @@
       "Albert Einstein",
       "Niels Bohr"
     ],
-    "answer": "Isaac Newton"
+    "answer": "Isaac Newton",
+    "shown": false
   },
   {
     "id": 50,
     "question": "Which is the largest internal organ in the human body?",
     "options": ["Heart", "Liver", "Lung", "Kidney"],
-    "answer": "Liver"
+    "answer": "Liver",
+    "shown": false
   }
 ]

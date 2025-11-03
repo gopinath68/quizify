@@ -8,6 +8,7 @@ function App() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [randomQuestions, setRandomQuestions] = useState([]);
   const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [shown, setShown] = useState([]);
   const _questions = randomQuestions;
   let slicedQuestions = _questions.slice(
     currentQuestionIndex,
@@ -23,48 +24,48 @@ function App() {
     currentQuestionIndex + 1
   );
 
-  console.log(
-    "slicedQuestionsRef",
-    _questions.slice(currentQuestionIndex, currentQuestionIndex + 1)
-  );
   useEffect(() => {
-    const randomQuestionsIdx = () => {
-      const randomIdx = [];
-      const randomQuestions = [];
-      const totalQuestionsCount = questions.length - 1;
-
-      while (randomQuestions.length !== selectedAnswers.length) {
-        // check idx is unique
-        // yes, push that quest to randomQuestions nd idx to rQIdx
-        let idx = Math.ceil(Math.random() * totalQuestionsCount);
-        if (!randomIdx.includes(idx)) {
-          randomIdx.push(idx);
-          randomQuestions.push(questions[idx]);
-        }
-      }
-      console.log("randomQuestions", randomQuestions);
-      setRandomQuestions(randomQuestions);
-    };
     randomQuestionsIdx();
   }, []);
-  console.log("randomQuestions", randomQuestions);
+
+  const randomQuestionsIdx = () => {
+    const randomIdx = [];
+    const randomQuestions = [];
+    const totalQuestionsCount = questions.length - 1;
+
+    while (randomQuestions.length !== selectedAnswers.length) {
+      // check idx is unique
+      // yes, push that quest to randomQuestions nd idx to rQIdx
+      let idx = Math.ceil(Math.random() * totalQuestionsCount);
+      if (!randomIdx.includes(idx)) {
+        randomIdx.push(idx);
+        randomQuestions.push(questions[idx]);
+      }
+    }
+
+    const questionsNotShowned = randomQuestions.filter(
+      (quest) => quest.shown !== true
+    );
+    const newRandomQues = questionsNotShowned.map((ques, idx) =>
+      ques.show !== true ? { ...ques, shown: true } : ques
+    );
+    setRandomQuestions(newRandomQues);
+  };
+
   const handleCheckAnswers = () => {
-    console.log(selectedAnswers);
     const hasUnansweredQuestion = selectedAnswers.every(
       (answer) => answer !== undefined
     );
 
-    console.log("hasUnansweredQuestion::", hasUnansweredQuestion);
     if (hasUnansweredQuestion) {
       const wrongAnswers = _questions.filter(
         (ques, idx) => ques.answer !== selectedAnswers[idx]
       );
-      console.log("correctAnswers", wrongAnswers);
+
       const correctAnswers = _questions.length - wrongAnswers.length;
       setVisibleAnswers(true);
       setShowResult(true);
       setCorrectAnswers(correctAnswers);
-      console.log("wrongAnswers", wrongAnswers);
     } else {
       let unansweredWarningMsg = "one or more questions you doesn't selected";
       if (confirm(unansweredWarningMsg) === true) {
@@ -72,7 +73,7 @@ function App() {
           (ques, idx) => ques.answer !== selectedAnswers[idx]
         );
         const correctAnswers = _questions.length - wrongAnswers.length;
-        console.log("correctAnswers", wrongAnswers.length);
+
         setShowResult(true);
         setCorrectAnswers(correctAnswers);
         setVisibleAnswers(true);
@@ -87,7 +88,6 @@ function App() {
     const selectedAnswersCopy = structuredClone(selectedAnswers);
     selectedAnswersCopy[id] = e.target.value;
     setSelectedAnswers(selectedAnswersCopy);
-    console.log(selectedAnswers);
   };
 
   const handlePrevQuestions = () => {
@@ -130,6 +130,10 @@ function App() {
       {" "}
       <h3 className="heading">Quizify</h3>
       <div className="quizify">
+        {showResult === false && currentQuestionIndex <= 0 && (
+          <button onClick={randomQuestionsIdx}>shuffleQuiz</button>
+        )}
+
         {showResult && selectedAnswers.length > 0 && (
           <>
             <h3 style={{ textAlign: "center", color: "green" }}>
@@ -148,21 +152,14 @@ function App() {
                 <div
                   key={i}
                   className={`options ${
-                    visibleAnswers &&
-                    showResult &&
-                    option === selectedAnswers[currentQuestionIndex] &&
-                    selectedAnswers[currentQuestionIndex] === ques.answer &&
-                    option === ques.answer
-                      ? "correctAnswer"
-                      : "" ||
-                        (visibleAnswers && showResult && option === ques.answer)
-                      ? "correctAnswer"
-                      : "" ||
-                        (visibleAnswers &&
-                          showResult &&
-                          option === selectedAnswers[currentQuestionIndex] &&
-                          selectedAnswers[currentQuestionIndex] !== ques.answer)
-                      ? "wrongAnswer"
+                    showResult
+                      ? ques.answer === option
+                        ? "correctAnswer"
+                        : selectedAnswers[currentQuestionIndex] === option
+                        ? "wrongAnswer"
+                        : ""
+                      : selectedAnswers[currentQuestionIndex] === option
+                      ? "selectedOption"
                       : ""
                   }`}
                 >
@@ -177,7 +174,7 @@ function App() {
                         handleAnswerSelection(e, currentQuestionIndex)
                       }
                     />
-                    <span className="option">{option}</span>
+                    {option}
                   </label>
                 </div>
               ))}
