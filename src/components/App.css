@@ -1,0 +1,158 @@
+:root {
+    --primary-btn-color: #3B82F6;
+    --primary-bg-color: #F9FAFB;
+    --primary-main-bg-color: #1F2937;
+
+}
+
+
+
+
+
+
+.quizify {
+    font-family: 'Kumbh Sans', sans-serif;
+    text-align: justify;
+    color: var(--primary-bg-color);
+    margin: 10px 20px 10px 20px;
+    border: 1px solid transparent;
+    background-color: #1F2937;
+    padding-left: 10px;
+
+}
+
+.heading {
+    font-family: 'Kumbh Sans', sans-serif;
+    text-align: center;
+    color: var(--primary-bg-color);
+
+}
+
+.shuffleQuizBtn {
+    border-color: transparent;
+    border-radius: 0.5rem;
+    color: black;
+    padding: 5px;
+    background-color: var(--primary-bg-color);
+    font-size: 1rem;
+    cursor: pointer;
+
+}
+
+#header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+}
+
+.questions {
+    font-size: 1.4rem;
+    padding-left: 10px;
+    text-align: center;
+}
+
+.button {
+    background-color: var(--primary-btn-color);
+    width: 6rem;
+    margin-top: 5px;
+    text-align: center;
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    border-color: transparent;
+    color: var(--primary-bg-color);
+    cursor: pointer;
+}
+
+
+
+.btnFooter {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 4vh;
+    margin-bottom: 4vh;
+
+}
+
+.optionField {
+    display: block;
+    cursor: pointer;
+    background-color: var(--primary-bg-color);
+
+}
+
+.optionField:hover {
+
+    background-color: lightslategray;
+    color: var(--primary-bg-color);
+
+}
+
+._optionField {
+    display: block;
+    cursor: pointer;
+
+}
+
+.optionsContainer {
+    display: block;
+    text-align: center;
+}
+
+
+.options {
+
+    color: black;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 1vh;
+}
+
+
+
+.inputOption {
+    display: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+
+}
+
+
+.correctAnswer {
+    border: 0 solid green;
+    background-color: green;
+    color: var(--primary-bg-color);
+}
+
+.wrongAnswer {
+    border: 0 solid red;
+    background-color: red;
+    color: var(--primary-bg-color);
+}
+
+.selectedOption {
+    background-color: orange;
+    color: var(--primary-bg-color);
+
+}
+
+.backHomeBtn {
+    color: var(--primary-bg-color);
+    background-color: var(--primary-btn-color);
+    width: 6rem;
+    margin-top: 5px;
+    text-align: center;
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    border-color: transparent;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.resultsHeader {
+    text-align: center;
+    border: 1px solid transparent;
+    background-color: var(--primary-bg-color);
+    color: black;
+
+}
