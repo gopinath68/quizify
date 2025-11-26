@@ -1,62 +1,81 @@
-import { use, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "./App.css";
-import questions from "../mocks/questions.json";
+
 import catogerizedQuestions from "../mocks/catogerizedQuestions.json";
 import Results from "./Results";
 import { useNavigate } from "react-router-dom";
 
 function App({ catogery }) {
-  const [visibleAnswers, setVisibleAnswers] = useState(false);
+
   const [showResult, setShowResult] = useState(false);
   const [resultsVisible, setResultsVisible] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [randomQuestions, setRandomQuestions] = useState([]);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const navigate = useNavigate();
-  const [shown, setShown] = useState([]);
+  let [count, setCount] = useState(parseInt(catogery.timeForPerQuestion));
+  const timerId = useRef();
+
   const _questions = randomQuestions;
-  let slicedQuestions = _questions.slice(
+  const slicedQuestions = _questions.slice(
     currentQuestionIndex,
     currentQuestionIndex + 1
   );
 
   const [selectedAnswers, setSelectedAnswers] = useState(
-    new Array(10).fill(undefined)
+    new Array(parseInt(catogery.noOfQuestions)).fill(undefined)
   );
 
-  slicedQuestions = _questions.slice(
-    currentQuestionIndex,
-    currentQuestionIndex + 1
-  );
+
+
+  useEffect(() => {
+    if (showResult === false && count !== 0) {
+      timerId.current = setInterval(() => {
+        setCount((prev) => prev - 1);
+      }, 1000);
+      return () => clearInterval(timerId.current);
+    } else if (count === 0) {
+      handleNextQuestionChange();
+      setCount(parseInt(catogery.timeForPerQuestion));
+    }
+    return () => clearInterval(timerId.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [count]);
 
   useEffect(() => {
     randomQuestionsIdx();
-  }, []);
+  }, [randomQuestionsIdx]);
 
-  const randomQuestionsIdx = () => {
-    setSelectedAnswers(new Array(10).fill(undefined));
+  const randomQuestionsIdx = useCallback(() => {
+    setSelectedAnswers(
+      new Array(parseInt(catogery.noOfQuestions)).fill(undefined)
+    );
+    setCount(parseInt(catogery.timeForPerQuestion));
     const randomIdx = [];
     const randomQuestions = [];
-    const totalQuestionsCount = catogerizedQuestions[catogery].length - 1;
+    const totalQuestionsCount =
+      catogerizedQuestions[catogery.questionsTopic].length - 1;
 
-    while (randomQuestions.length !== selectedAnswers.length) {
+    while (randomQuestions.length !== parseInt(catogery.noOfQuestions)) {
       // check idx is unique
       // yes, push that quest to randomQuestions nd idx to rQIdx
       let idx = Math.ceil(Math.random() * totalQuestionsCount);
       if (!randomIdx.includes(idx)) {
         randomIdx.push(idx);
-        randomQuestions.push(catogerizedQuestions[catogery][idx]);
+        randomQuestions.push(
+          catogerizedQuestions[catogery.questionsTopic][idx]
+        );
       }
     }
 
     const questionsNotShowned = randomQuestions.filter(
       (quest) => quest.shown !== true
     );
-    const newRandomQues = questionsNotShowned.map((ques, idx) =>
+    const newRandomQues = questionsNotShowned.map((ques) =>
       ques.show !== true ? { ...ques, shown: true } : ques
     );
     setRandomQuestions(newRandomQues);
-  };
+  }, [catogery]);
 
   const handleCheckAnswers = () => {
     const hasUnansweredQuestion = selectedAnswers.every(
@@ -69,7 +88,6 @@ function App({ catogery }) {
       );
 
       const correctAnswers = _questions.length - wrongAnswers.length;
-      setVisibleAnswers(true);
       setResultsVisible(true);
       setShowResult(true);
       setCorrectAnswers(correctAnswers);
@@ -84,11 +102,6 @@ function App({ catogery }) {
         setShowResult(true);
         setCorrectAnswers(correctAnswers);
         setResultsVisible(true);
-        setVisibleAnswers(true);
-      } else {
-        setVisibleAnswers(false);
-        setShowResult(false);
-        setResultsVisible(false);
       }
     }
   };
@@ -103,22 +116,21 @@ function App({ catogery }) {
     const prevQuestionIndex = currentQuestionIndex - 1;
     if (prevQuestionIndex >= 0) {
       setCurrentQuestionIndex(prevQuestionIndex);
-      slicedQuestions = _questions.slice(
-        prevQuestionIndex,
-        prevQuestionIndex + 1
-      );
+
     } else {
       alert("This is the first question.");
     }
   };
 
   const handleReset = () => {
-    setVisibleAnswers(false);
     setShowResult(false);
     setCurrentQuestionIndex(0);
-    slicedQuestions = _questions.slice(0, 1);
-    setSelectedAnswers(new Array(10).fill(undefined));
+
+    setSelectedAnswers(
+      new Array(parseInt(catogery.noOfQuestions)).fill(undefined)
+    );
     setCorrectAnswers(0);
+    setCount(parseInt(catogery.timeForPerQuestion));
   };
 
   const handleNavigation = () => {
@@ -131,12 +143,11 @@ function App({ catogery }) {
 
     if (nextQuestionIndex < _questions.length) {
       setCurrentQuestionIndex(nextQuestionIndex);
-      slicedQuestions = _questions.slice(
-        nextQuestionIndex,
-        nextQuestionIndex + 1
-      );
+
+      setCount(parseInt(catogery.timeForPerQuestion));
     } else {
-      alert("No more questions available.");
+      // alert("No more questions available.");
+      handleCheckAnswers();
     }
   };
 
@@ -159,11 +170,15 @@ function App({ catogery }) {
             <Results
               correctAnswers={correctAnswers}
               questionsCount={_questions.length}
+              score={
+                correctAnswers * catogery.applyWeight -
+                catogery.reduceMarkForWrongAnswer
+              }
             />
           </div>
         )}
         {resultsVisible === false &&
-          slicedQuestions.map((ques, idx) => (
+          slicedQuestions.map((ques) => (
             <div key={ques.id} className="questionBlock">
               <p className="questions">
                 {currentQuestionIndex + 1} . {ques.question}
@@ -203,9 +218,10 @@ function App({ catogery }) {
               </div>
             </div>
           ))}
+        {showResult === false && <div id="count">{count}</div>}
         {resultsVisible === false && (
           <div className="btnFooter">
-            {currentQuestionIndex > 0 && (
+            {showResult === true && currentQuestionIndex > 0 && (
               <button className="button" onClick={handlePrevQuestions}>
                 Previous
               </button>
@@ -216,11 +232,16 @@ function App({ catogery }) {
                   Submit
                 </button>
               )}
-            {currentQuestionIndex < _questions.length - 1 && (
-              <button className="button" onClick={handleNextQuestionChange}>
-                Next
-              </button>
-            )}
+            {showResult === true &&
+              currentQuestionIndex < _questions.length - 1 && (
+                <button
+                  className="button"
+                  onClick={handleNextQuestionChange}
+                  disabled={_questions.length === currentQuestionIndex}
+                >
+                  Next
+                </button>
+              )}
             {currentQuestionIndex === _questions.length - 1 && (
               <button className="button" onClick={handleReset}>
                 Reset
