@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import "./App.css";
-
+import questions from "../mocks/questions.json";
 import catogerizedQuestions from "../mocks/catogerizedQuestions.json";
 import Results from "./Results";
 import { useNavigate } from "react-router-dom";
 
 function App({ catogery }) {
-
+  const [visibleAnswers, setVisibleAnswers] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [resultsVisible, setResultsVisible] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -15,9 +15,9 @@ function App({ catogery }) {
   const navigate = useNavigate();
   let [count, setCount] = useState(parseInt(catogery.timeForPerQuestion));
   const timerId = useRef();
-
+  const [shown, setShown] = useState([]);
   const _questions = randomQuestions;
-  const slicedQuestions = _questions.slice(
+  let slicedQuestions = _questions.slice(
     currentQuestionIndex,
     currentQuestionIndex + 1
   );
@@ -26,7 +26,10 @@ function App({ catogery }) {
     new Array(parseInt(catogery.noOfQuestions)).fill(undefined)
   );
 
-
+  slicedQuestions = _questions.slice(
+    currentQuestionIndex,
+    currentQuestionIndex + 1
+  );
 
   useEffect(() => {
     if (showResult === false && count !== 0) {
@@ -39,14 +42,13 @@ function App({ catogery }) {
       setCount(parseInt(catogery.timeForPerQuestion));
     }
     return () => clearInterval(timerId.current);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count]);
 
   useEffect(() => {
     randomQuestionsIdx();
-  }, [randomQuestionsIdx]);
+  }, []);
 
-  const randomQuestionsIdx = useCallback(() => {
+  const randomQuestionsIdx = () => {
     setSelectedAnswers(
       new Array(parseInt(catogery.noOfQuestions)).fill(undefined)
     );
@@ -56,7 +58,7 @@ function App({ catogery }) {
     const totalQuestionsCount =
       catogerizedQuestions[catogery.questionsTopic].length - 1;
 
-    while (randomQuestions.length !== parseInt(catogery.noOfQuestions)) {
+    while (randomQuestions.length !== selectedAnswers.length) {
       // check idx is unique
       // yes, push that quest to randomQuestions nd idx to rQIdx
       let idx = Math.ceil(Math.random() * totalQuestionsCount);
@@ -71,11 +73,11 @@ function App({ catogery }) {
     const questionsNotShowned = randomQuestions.filter(
       (quest) => quest.shown !== true
     );
-    const newRandomQues = questionsNotShowned.map((ques) =>
+    const newRandomQues = questionsNotShowned.map((ques, idx) =>
       ques.show !== true ? { ...ques, shown: true } : ques
     );
     setRandomQuestions(newRandomQues);
-  }, [catogery]);
+  };
 
   const handleCheckAnswers = () => {
     const hasUnansweredQuestion = selectedAnswers.every(
@@ -88,6 +90,7 @@ function App({ catogery }) {
       );
 
       const correctAnswers = _questions.length - wrongAnswers.length;
+      setVisibleAnswers(true);
       setResultsVisible(true);
       setShowResult(true);
       setCorrectAnswers(correctAnswers);
@@ -102,6 +105,11 @@ function App({ catogery }) {
         setShowResult(true);
         setCorrectAnswers(correctAnswers);
         setResultsVisible(true);
+        setVisibleAnswers(true);
+      } else {
+        setVisibleAnswers(false);
+        setShowResult(false);
+        setResultsVisible(false);
       }
     }
   };
@@ -116,16 +124,20 @@ function App({ catogery }) {
     const prevQuestionIndex = currentQuestionIndex - 1;
     if (prevQuestionIndex >= 0) {
       setCurrentQuestionIndex(prevQuestionIndex);
-
+      slicedQuestions = _questions.slice(
+        prevQuestionIndex,
+        prevQuestionIndex + 1
+      );
     } else {
       alert("This is the first question.");
     }
   };
 
   const handleReset = () => {
+    setVisibleAnswers(false);
     setShowResult(false);
     setCurrentQuestionIndex(0);
-
+    slicedQuestions = _questions.slice(0, 1);
     setSelectedAnswers(
       new Array(parseInt(catogery.noOfQuestions)).fill(undefined)
     );
@@ -143,7 +155,10 @@ function App({ catogery }) {
 
     if (nextQuestionIndex < _questions.length) {
       setCurrentQuestionIndex(nextQuestionIndex);
-
+      slicedQuestions = _questions.slice(
+        nextQuestionIndex,
+        nextQuestionIndex + 1
+      );
       setCount(parseInt(catogery.timeForPerQuestion));
     } else {
       // alert("No more questions available.");
@@ -178,7 +193,7 @@ function App({ catogery }) {
           </div>
         )}
         {resultsVisible === false &&
-          slicedQuestions.map((ques) => (
+          slicedQuestions.map((ques, idx) => (
             <div key={ques.id} className="questionBlock">
               <p className="questions">
                 {currentQuestionIndex + 1} . {ques.question}

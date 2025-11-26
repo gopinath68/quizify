@@ -1,14 +1,14 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import catogerizedQuestions from "../mocks/catogerizedQuestions.json";
 import App from "./App";
-
+import { useNavigate } from "react-router-dom";
 import "./Home.css";
 import { useForm } from "react-hook-form";
 
 function Home() {
   const [quesVisible, setQuesVisible] = useState(false);
-
-
+  const navigate = useNavigate();
+  const [quesLength, setQuesLength] = useState(0);
   const [selectedCatogeries, setSelectedCatogeries] = useState();
   const { register, handleSubmit, reset, formState } = useForm();
   const { errors } = formState;
